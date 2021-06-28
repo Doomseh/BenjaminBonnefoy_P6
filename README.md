@@ -11,4 +11,9 @@ Démarrer ng serve pour avoir accès au serveur de développement. Rendez-vous
 
 ## Backend
 
-Lancez le serveur avec la commande "node server"
+Installer les modules avec la commande "npm install"
+
+Le fichier ".env.dist" est un exemple pour l'utilisation de variables d'environnement dans un fichier ".env"
+Pour ce projet le PORT attendu par l'API est le port 3000.
+
+Lancez le serveur avec la commande "node server" 

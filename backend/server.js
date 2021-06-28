@@ -1,6 +1,7 @@
 // Importation du package HTTPS
 const http = require('http');
 const app = require('./app');
+require("dotenv").config();
 
 // Fonction pour renvoyer un port valide
 const normalizePort = val => {
@@ -14,7 +15,7 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || 3000);
 app.set('port', port);
 
 // Fonction pour rechercher et gerer les différentes erreurs

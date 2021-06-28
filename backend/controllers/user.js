@@ -1,17 +1,31 @@
 const bcrypt = require('bcrypt'); // Plugin pour crypter une chaine de caractère
 const User = require('../models/User');
 const jwt = require('jsonwebtoken'); // Plugin pour génerer un token d'authentification
-const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/ // Regex avec condition pour sécuriser le mot de passe
-
+// Regex avec condition pour sécuriser le mot de passe
+const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/ 
+// Module pour masquer des données
+const MaskData = require("maskdata");
+// Option de masquage de l'email
+const emailMask2Options = {
+    maskWith: "*", 
+    unmaskedStartCharactersBeforeAt: 3,
+    unmaskedEndCharactersAfterAt: 2,
+    maskAtTheRate: false
+};
 // Fonction pour créer un nouvel utilisation
 exports.signup = (req, res, next) => {
+
+    // On défini l'email protégé
+    const email = req.body.email;
+    const maskedEmail = MaskData.maskEmail2(email, emailMask2Options);
+
     // Condition pour vérifier la qualité du mot de passe
     if (regexPassword.test(req.body.password)) {
     
         bcrypt.hash(req.body.password, 10) // Appel de la fonction de hachage pour le mot de passe puis on lui demandons de « saler » le mot de passe 10 fois.
             .then(hash => {
                 const user = new User({
-                    email: req.body.email,
+                    email: maskedEmail,
                     password: hash
                 });
                 user.save() // Sauvegarde des informations du nouvel utilisateur
@@ -34,8 +48,13 @@ exports.signup = (req, res, next) => {
 
 // Fonction pour se connecter si l'utilisateur est déjà inscrit
 exports.login = (req, res, next) => {
+
+    // On récupère l'email protégé
+    const email = req.body.email;
+    const maskedEmail = MaskData.maskEmail2(email, emailMask2Options);
+
     User.findOne({
-            email: req.body.email // Recherche de l'utilisateur par son adresse mail
+            email: maskedEmail // Recherche de l'utilisateur par son adresse mail
         })
         .then(user => {
             if (!user) { // condition si l'utilisateur n'existe pas
