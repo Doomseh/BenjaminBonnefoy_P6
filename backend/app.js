@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+require('dotenv').config();
 
 // Recupération des routes
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 // Connexion à la base de donnée MongoDB
-mongoose.connect('mongodb+srv://Benjamin:g1pMHnukxxja3vWQ@cluster0.zcdvw.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DB_CONNECT, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
