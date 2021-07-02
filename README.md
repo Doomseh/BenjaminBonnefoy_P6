@@ -13,7 +13,7 @@ Démarrer ng serve pour avoir accès au serveur de développement. Rendez-vous
 
 Installer les modules avec la commande "npm install"
 
-Le fichier ".env.dist" est un exemple pour l'utilisation de variables d'environnement dans un fichier ".env"
-Pour ce projet le PORT attendu par l'API est le port 3000.
+Le fichier ".env.dist" est un exemple pour l'utilisation de variables d'environnement dans un fichier ".env".
+Créez le fichier ".env", pour ce projet vous pouvez définir les mêmes variables présentent dans le fichier ".env.dist".
 
 Lancez le serveur avec la commande "node server" 

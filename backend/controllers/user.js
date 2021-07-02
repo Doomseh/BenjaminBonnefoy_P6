@@ -12,6 +12,7 @@ const emailMask2Options = {
     unmaskedEndCharactersAfterAt: 2,
     maskAtTheRate: false
 };
+require('dotenv').config();
 // Fonction pour créer un nouvel utilisation
 exports.signup = (req, res, next) => {
 
@@ -75,7 +76,7 @@ exports.login = (req, res, next) => {
                         token: jwt.sign({ // fonction sign de jsonwebtoken pour encoder un nouveau token 
                                 userId: user._id
                             },
-                            'RANDOM_TOKEN_SECRET', {
+                            process.env.TOKEN, {
                                 expiresIn: '24h' // temps de validité du token de 24h
                             }
                         )
